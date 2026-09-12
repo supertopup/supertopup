@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed | Super TopUp</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#182033;--muted:#69758a;--primary:#ff563d;--primary2:#ff765e;--line:#e1e6ef;--blue:#1769e0;--good:#20a866;--good2:#189257}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{width:min(560px,94%);margin:26px auto 50px}
+header{background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 12px #17233d0a}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between;width:min(1100px,94%);margin:auto}
+.logo{font-size:22px;font-weight:900}.logo span{color:var(--primary)}
+.back{color:#58657a;text-decoration:none;font-size:14px;font-weight:700}.back:hover{color:var(--primary)}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px #1b28400f;overflow:hidden;margin-top:24px}
+.status-area{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 24px 26px}
+.tick{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--good),var(--good2));display:grid;place-items:center;box-shadow:0 10px 24px #20a8663d;margin-bottom:18px}
+.tick svg{width:38px;height:38px}
+.status-area h1{margin:0 0 8px;font-size:23px}
+.status-area p{margin:0;color:var(--muted);font-size:14px;line-height:1.6;max-width:380px}
+
+.details{margin:0 20px 20px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px}
+.row:last-child{border-bottom:0}
+.row .k{color:var(--muted)}
+.row .v{font-weight:800;text-align:right}
+.row .v.amount{color:var(--blue);font-size:16px}
+.row .v.tid{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+
+.note{margin:0 20px 20px;padding:13px 15px;border-radius:11px;background:#fff9ec;border:1px solid #ffe6b0;color:#8a6416;font-size:12.5px;line-height:1.6}
+
+.actions{padding:0 20px 24px;display:flex;gap:10px}
+.btn{flex:1;border:0;border-radius:12px;font-size:14px;font-weight:800;padding:14px;cursor:pointer;transition:.15s;text-align:center;text-decoration:none;display:inline-block}
+.btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;box-shadow:0 8px 18px #ff563d2e}
+.btn.primary:hover{transform:translateY(-1px)}
+.btn.secondary{background:#fff;color:#465168;border:1px solid #dfe4ed}
+.btn.secondary:hover{border-color:#b8c8e4}
+
+footer{text-align:center;color:var(--muted);font-size:12px;padding:0 0 25px}
+@media(max-width:480px){.status-area{padding:30px 18px 22px}.status-area h1{font-size:20px}.actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="logo">Super<span>TopUp</span></div><a class="back" href="index.html">← All Games</a></div></header>
+
+<div class="wrap">
+  <div class="card">
+    <div class="status-area">
+      <div class="tick">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h1>Order Submitted!</h1>
+      <p>আপনার অর্ডারটি সফলভাবে জমা হয়েছে। যাচাই সম্পন্ন হলে আপনার আইডিতে টপ-আপ পাঠিয়ে দেওয়া হবে।</p>
+    </div>
+
+    <div class="details" id="details"></div>
+
+    <div class="note">⏳ সাধারণত ৫–১৫ মিনিটের মধ্যে টপ-আপ সম্পন্ন হয়। কোনো সমস্যা হলে Transaction ID সহ আমাদের সাপোর্টে যোগাযোগ করুন।</div>
+
+    <div class="actions">
+      <a class="btn secondary" href="index.html">Home</a>
+      <button class="btn primary" onclick="window.print()">Save Receipt</button>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 Super TopUp — Transaction Confirmation</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+const orderId = "ORD" + Date.now().toString().slice(-8);
+
+const fields = [
+  ["Order ID", orderId, false],
+  ["Game", params.get("game") || "-", false],
+  ["Package", params.get("package") || "-", false],
+  ["Player ID / UID", params.get("uid") || "-", false],
+  ["Payment Method", params.get("method") || "-", false],
+  ["Transaction ID", params.get("tid") || "-", true],
+  ["Amount", (params.get("amount") || "0") + " BDT", false]
+];
+
+document.getElementById("details").innerHTML = fields.map(([k,v,isTid]) => `
+  <div class="row">
+    <span class="k">${k}</span>
+    <span class="v${isTid ? ' tid' : ''}${k==='Amount' ? ' amount' : ''}">${v}</span>
+  </div>
+`).join("");
+</script>
+</body>
+</html>

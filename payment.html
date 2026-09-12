@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment | GameTop BD</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#182033;--muted:#69758a;--line:#e1e6ef;--blue:#1769e0;--blue2:#0f4fb0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{width:min(560px,94%);margin:26px auto 50px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px #1b28400f;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+.iconbtn{background:none;border:0;color:#7d8aa3;font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.iconbtn:hover{color:#3a4a66}
+.logo-area{display:flex;flex-direction:column;align-items:center;padding:26px 20px 18px}
+.logo-area img{height:52px;object-fit:contain}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 20px 20px}
+.summary .box{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;align-items:center;gap:10px}
+.summary .box.center{justify-content:center;text-align:center}
+.merchant-badge{width:34px;height:34px;border-radius:50%;background:#eef2f9;display:grid;place-items:center;font-size:16px;flex:none}
+.summary .label{font-size:12px;color:var(--muted);margin-bottom:2px}
+.summary .value{font-weight:800;font-size:15px}
+.instructions{margin:0 18px 18px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px}
+.row:last-child{border-bottom:0}
+.row b{font-weight:800}
+.copybtn{border:0;background:var(--blue);color:#fff;font-weight:700;font-size:12.5px;padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:.15s}
+.copybtn:hover{background:var(--blue2)}
+.copybtn.copied{background:#1fa864}
+.tid-block{padding:14px 16px}
+.tid-label{font-weight:800;font-size:14px;margin-bottom:8px;display:block}
+.tid-input{width:100%;border:1px solid #d9e0eb;border-radius:9px;padding:13px 14px;font-size:14px;outline:none}
+.tid-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1769e012}
+.verify-wrap{padding:0 18px 22px}
+.verify{width:100%;border:0;border-radius:12px;background:var(--blue);color:#fff;font-size:15px;font-weight:900;padding:16px;cursor:pointer;box-shadow:0 10px 22px #1769e02e;transition:.15s}
+.verify:hover{background:var(--blue2);transform:translateY(-1px)}
+.err{color:#d0333a;font-size:12.5px;margin-top:8px;display:none}
+@media(max-width:480px){.summary{grid-template-columns:1fr 1fr}.wrap{margin-top:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="topbar">
+      <button class="iconbtn" onclick="history.back()" aria-label="Back">‹</button>
+      <button class="iconbtn" onclick="location.href='index.html'" aria-label="Close">×</button>
+    </div>
+
+    <div class="logo-area">
+      <img id="methodLogo" src="" alt="Payment Method">
+    </div>
+
+    <div class="summary">
+      <div class="box">
+        <div class="merchant-badge">🛍️</div>
+        <div>
+          <div class="label">Merchant</div>
+          <div class="value" id="merchantName">GameTop BD</div>
+        </div>
+      </div>
+      <div class="box center">
+        <div>
+          <div class="label">Amount</div>
+          <div class="value" id="amountValue">0 BDT</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <div class="row"><span>আপনার <b id="methodNameInline">bKash</b> মোবাইল অ্যাপে যান।</span></div>
+      <div class="row"><span><b>Send Money</b> এ ক্লিক করুন।</span></div>
+      <div class="row">
+        <span>প্রাপক নম্বর হিসেবে এই নম্বরটি লিখুনঃ <b id="receiverNumber">01909243743</b></span>
+        <button class="copybtn" onclick="copyText('receiverNumber', this)">📋 কপি করুন</button>
+      </div>
+      <div class="row">
+        <span>টাকার পরিমাণঃ <b id="amountText">0</b></span>
+        <button class="copybtn" onclick="copyText('amountText', this)">📋 কপি করুন</button>
+      </div>
+      <div class="row"><span>নিশ্চিত করতে এখন আপনার <b id="methodNameInline2">bKash</b> পিন লিখুন।</span></div>
+      <div class="row"><span>এখন নিচের বক্সে আপনার <b>Transaction ID</b> দিন এবং নিচের Verify বাটনে ক্লিক করুন।</span></div>
+
+      <div class="tid-block">
+        <label class="tid-label" for="tid">Transaction ID</label>
+        <input class="tid-input" id="tid" type="text" placeholder="ট্রানজেকশন আইডি লিখুন">
+        <div class="err" id="tidErr">অনুগ্রহ করে সঠিক Transaction ID লিখুন।</div>
+      </div>
+    </div>
+
+    <div class="verify-wrap">
+      <button class="verify" onclick="doVerify()">VERIFY</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+const methodInfo = {
+  bKash: { logo: "bkash.jpg" },
+  Nagad: { logo: "nagad.jpg" },
+  Rocket: { logo: "rocket.jpg" }
+};
+
+const method = params.get("method") || "bKash";
+const amount = params.get("amount") || "0";
+const game = params.get("game") || "";
+const pkg = params.get("package") || "";
+const uid = params.get("uid") || "";
+
+const info = methodInfo[method] || methodInfo["bKash"];
+document.getElementById("methodLogo").src = info.logo;
+document.getElementById("methodLogo").alt = method;
+document.getElementById("methodLogo").onerror = function(){ this.outerHTML = "<span style=\"font-weight:900;font-size:22px\">"+method+"</span>"; };
+
+document.getElementById("methodNameInline").textContent = method;
+document.getElementById("methodNameInline2").textContent = method;
+document.getElementById("amountValue").textContent = amount + " BDT";
+document.getElementById("amountText").textContent = amount;
+
+function copyText(id, btn){
+  const text = document.getElementById(id).textContent.trim();
+  const done = () => {
+    const original = btn.innerHTML;
+    btn.innerHTML = "✓ কপি হয়েছে";
+    btn.classList.add("copied");
+    setTimeout(()=>{ btn.innerHTML = original; btn.classList.remove("copied"); }, 1500);
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text, done));
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+
+function fallbackCopy(text, cb){
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try{ document.execCommand("copy"); }catch(e){}
+  document.body.removeChild(ta);
+  cb();
+}
+
+function doVerify(){
+  const tid = document.getElementById("tid").value.trim();
+  const err = document.getElementById("tidErr");
+  if(!tid){
+    err.style.display = "block";
+    document.getElementById("tid").focus();
+    return;
+  }
+  err.style.display = "none";
+
+  const outParams = new URLSearchParams({
+    game: game,
+    package: pkg,
+    amount: amount,
+    uid: uid,
+    method: method,
+    tid: tid
+  });
+  window.location.href = "transactionsuccess.html?" + outParams.toString();
+}
+</script>
+</body>
+</html>

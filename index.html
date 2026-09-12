@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Top Up — Your top up partner</title>
+<style>
+:root{--bg:#f6f8fc;--card:#ffffff;--card2:#f1f5fb;--text:#182033;--muted:#68738a;--primary:#ff5a3d;--cyan:#ff7a59;--line:#e5e9f1;--good:#20a866}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f6f8fc;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{text-decoration:none;color:inherit}.container{width:min(1180px,92%);margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);box-shadow:0 2px 14px #1820330b}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.logo{font-size:23px;font-weight:900;letter-spacing:.4px}.logo span{color:var(--primary)}
+nav{display:flex;gap:24px;color:#5d6678;font-size:14px}nav a:hover{color:white}.nav-btn{background:var(--primary);color:#fff;padding:11px 17px;border-radius:10px;font-weight:700;box-shadow:0 7px 18px #ff5a3d25}
+.hero{padding:68px 0 34px;display:grid;grid-template-columns:1.1fr .9fr;gap:35px;align-items:center}.badge{display:inline-flex;padding:7px 11px;border:1px solid #ffd4ca;background:#fff3ef;border-radius:999px;color:#e24b32;font-size:12px}.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.02;margin:18px 0}.hero h1 span{color:var(--primary)}.hero p{color:var(--muted);font-size:17px;line-height:1.7;max-width:650px}.actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}.btn{border:0;cursor:pointer;padding:13px 18px;border-radius:13px;font-weight:800;font-size:14px}.primary{background:linear-gradient(135deg,var(--primary),#5e7cff);color:#fff}.secondary{background:#fff;color:#465168;border:1px solid #dfe4ed}
+.hero-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 18px 45px #24314b12}.hero-art{height:270px;border-radius:16px;background:linear-gradient(135deg,#fff0eb,#fff8f5);display:flex;align-items:center;justify-content:center;font-size:76px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.stat{background:#fafbfe;border:1px solid var(--line);border-radius:12px;padding:13px}.stat b{display:block;font-size:18px}.stat small{color:var(--muted)}
+.section{padding:38px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:20px}.section h2{font-size:27px;margin:0}.section-head p{margin:5px 0 0;color:var(--muted)}
+.search{width:250px;max-width:100%;padding:12px 14px;border:1px solid #dfe4ed;background:#fff;color:#182033;border-radius:10px;outline:none}
+.games{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.game{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;transition:.2s;box-shadow:0 7px 22px #24314b08}.game:hover{transform:translateY(-3px);border-color:#536487}.cover{height:130px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:48px;background:linear-gradient(135deg,#fff1ed,#f4f7fb);margin-bottom:12px;overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover;display:block}.game h3{margin:0 0 4px}.game p{margin:0;color:var(--muted);font-size:13px}.price{margin-top:11px;color:#aeb9cf;font-size:12px}.topbtn{width:100%;margin-top:12px;background:#fff4f1;color:#e64e35;border:1px solid #ffd3c9;padding:10px;border-radius:9px;cursor:pointer;font-weight:700}.topbtn:hover{background:#ffebe6}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.step{background:#fff;border:1px solid var(--line);padding:22px;border-radius:16px;box-shadow:0 7px 22px #24314b08}.num{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#fff0ec;color:#e6533a;font-weight:900;margin-bottom:14px}.step p{color:var(--muted);line-height:1.6}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:30px 0;color:var(--muted);font-size:13px;background:#fff}
+.modal{position:fixed;inset:0;background:#18203355;display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal.open{display:flex}.modal-box{width:min(480px,100%);background:#fff;border:1px solid var(--line);border-radius:18px;padding:23px;box-shadow:0 25px 70px #18203325}.modal-head{display:flex;justify-content:space-between;align-items:center}.close{background:none;border:0;color:#7d8799;font-size:25px;cursor:pointer}.field{margin-top:14px}.field label{display:block;font-size:13px;color:#68738a;margin-bottom:7px}.field input,.field select{width:100%;padding:12px;background:#fff;border:1px solid #dfe4ed;border-radius:9px;color:#182033}.packages{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.pkg{padding:10px;border:1px solid var(--line);background:#fafbfe;border-radius:9px;cursor:pointer;text-align:center}.pkg.active{border-color:var(--primary);background:#fff0ec}.notice{margin-top:14px;padding:11px;border-radius:9px;background:#f6f8fc;color:#68738a;font-size:12px;line-height:1.5}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:42px}.games{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}nav{display:none}.hero-card{display:none}}
+@media(max-width:520px){.games{grid-template-columns:1fr 1fr}.game{padding:10px}.cover{height:105px;font-size:38px}.section-head{align-items:start;flex-direction:column}.stats{grid-template-columns:1fr 1fr 1fr}.nav{height:64px}.nav-btn{padding:9px 12px}.logo{font-size:19px}}
+</style>
+</head>
+<body>
+<header><div class="container nav"><div class="logo">Super<span> Top</span>Up</div><nav><a href="#games">Games</a><a href="#how">How it works</a><a href="#support">Support</a></nav><a class="nav-btn" href="#games">Top Up Now</a></div></header>
+
+<div style="background:#fff7f4;border-bottom:1px solid #ffe1d9;color:#b84c38;text-align:center;padding:9px 14px;font-size:13px">
+  🎉 Welcome to Super Top Up — দ্রুত ও সহজ Game Top-Up
+</div>
+<main>
+<section class="hero container">
+<div>
+<span class="badge">⚡ Fast • Simple • secured</span>
+<h1>Your gaming<br><span>top-up hub.</span></h1>
+<p>Free Fire, PUBG Mobile, Mobile Legends, Valorant, eFootball এবং আরও জনপ্রিয় গেমের জন্য একটি আধুনিক top-up site.</p>
+<div class="actions"><a class="btn primary" href="#games">Browse Games</a><a class="btn secondary" href="#how">How it works</a></div>
+</div>
+<div class="hero-card"><div class="hero-art">🎮</div><div class="stats"><div class="stat"><b>10+</b><small>Games</small></div><div class="stat"><b>24/7</b><small>Support</small></div><div class="stat"><b>Fast</b><small>Delivery UI</small></div></div></div>
+</section>
+
+<section class="section container" id="games">
+<div class="section-head"><div><h2>Popular games</h2><p>Choose a game to start a  top-up.</p></div><input id="search" class="search" placeholder="Search games..."></div>
+<div class="games" id="gameGrid"></div>
+</section>
+
+<section class="section container" id="how"><div class="section-head"><div><h2>How it works</h2><p>Simple three-step checkout flow.</p></div></div>
+<div class="steps"><div class="step"><div class="num">01</div><h3>Choose a game</h3><p>আপনার পছন্দের গেম নির্বাচন করুন এবং একটি package বেছে নিন।</p></div><div class="step"><div class="num">02</div><h3>Enter Player ID</h3><p>শুধু প্রয়োজনীয় Player ID দিন। আমরা কখনো ইউজার এর পাসওয়ার্ড সংগ্রহ করিনা।</p></div><div class="step"><div class="num">03</div><h3>Confirm order</h3><p>এখন পেমেন্ট করে অর্ডার সম্পন্ন করুন, ১০ মিনিট এর মধ্যে ডেলিভারি সম্পন্ন করা হয়। </p></div></div>
+</section>
+</main>
+
+<footer id="support"><div class="container">© 2026 Super topup.</div></footer>
+
+<div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><h2 id="modalTitle">Top Up</h2><button class="close" onclick="closeModal()">×</button></div>
+<div class="field"><label>Player ID</label><input id="playerId" placeholder="Enter your Player ID"></div>
+<div class="field"><label>Package</label><div class="packages" id="packages"></div></div>
+<div class="notice">১০ মিনিট এর মধ্যে ডেলিভারি দেওয়া হয়, কোনো সমস্যা হলে অবশ্যই আমাদের সাথে যোগাযোগ করবেন।</div>
+<button class="btn primary" style="width:100%;margin-top:16px" onclick="demoOrder()">Continue</button>
+</div></div>
+
+<script>
+const games=[
+ {name:"Free Fire",image:"freefire.jpg",currency:"Diamonds",page:"freefire.html"},
+ {name:"PUBG Mobile",image:"pubgmobile.jpg",currency:"UC",page:"pubgmobile.html"},
+ {name:"Mobile Legends",image:"mobilelegends.jpg",currency:"Diamonds",page:"mobilelegends.html"},
+ {name:"Valorant",image:"valorant.jpg",currency:"VP",page:"valorant.html"},
+ {name:"eFootball",image:"efootball.jpg",currency:"Coins",page:"efootball.html"},
+ {name:"Call of Duty Mobile",image:"callofdutymobile.jpg",currency:"CP",page:"callofdutymobile.html"},
+ {name:"Roblox",image:"roblox.jpg",currency:"Robux",page:"roblox.html"},
+ {name:"Honor of Kings",image:"honorofkings.jpg",currency:"Tokens",page:"honorofkings.html"}
+];
+const grid=document.getElementById("gameGrid");
+function render(list){
+ grid.innerHTML=list.map(g=>`<div class="game" onclick="goToGame('${g.page}')" style="cursor:pointer">
+   <div class="cover"><img src="${g.image}" alt="${g.name}" onerror="this.style.display='none';this.parentElement.innerHTML='🎮'"></div>
+   <h3>${g.name}</h3><p>${g.currency} Top Up</p>
+   <div class="price">Starting from ৳ 50</div>
+   <button class="topbtn" onclick="event.stopPropagation();goToGame('${g.page}')">Top Up</button>
+ </div>`).join("");
+}
+render(games);
+document.getElementById("search").addEventListener("input",e=>{
+ const q=e.target.value.toLowerCase(); render(games.filter(g=>g.name.toLowerCase().includes(q)));
+});
+function goToGame(page){
+ window.location.href=page;
+}
+function openModal(name,currency){
+ document.getElementById("modalTitle").textContent=name+" — "+currency;
+ const packs=[["Small","৳50"],["Medium","৳100"],["Large","৳250"],["XL","৳500"],["Mega","৳1000"],["Custom","Custom"]];
+ document.getElementById("packages").innerHTML=packs.map((p,i)=>`<div class="pkg ${i===1?'active':''}" onclick="selectPkg(this)"><b>${p[0]}</b><br><small>${p[1]}</small></div>`).join("");
+ document.getElementById("modal").classList.add("open");
+}
+function selectPkg(el){document.querySelectorAll(".pkg").forEach(x=>x.classList.remove("active"));el.classList.add("active")}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+function demoOrder(){
+ const id=document.getElementById("playerId").value.trim();
+ if(!id){alert("Please enter your Player ID.");return}
+ alert("Demo order created! Real payment/top-up is not connected.");
+ closeModal();
+}
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+</script>
+</body>
+</html>
